@@ -4,69 +4,262 @@ description: 'The navigation field in docs.json defines the pages that go in the
 icon: 'map'
 ---
 
-The navigation menu is the list of links on every website.
+The navigation menu is the list of links on every page of your documentation site. It provides the primary way for users to discover and navigate your content.
 
-You will likely update `docs.json` every time you add a new page. Pages do not show up automatically.
+You will update `docs.json` every time you add a new page. Pages do not show up automatically in the sidebar.
 
-## Navigation syntax
+## Navigation Format (v2)
 
-Our navigation syntax is recursive which means you can make nested navigation groups. You don't need to include `.mdx` in page names.
+Mintlify uses a v2 navigation format with `tabs` and `groups` organized under a `navigation` object. This format provides more flexibility and supports nested navigation.
+
+### Basic Structure
+
+```json
+"navigation": {
+  "tabs": [
+    {
+      "tab": "Tab Name",
+      "groups": [
+        {
+          "group": "Group Name",
+          "pages": ["page1", "page2"]
+        }
+      ]
+    }
+  ],
+  "global": {
+    "anchors": [...]
+  }
+}
+```
+
+### Navigation Properties
+
+<ResponseField name="navigation" type="object" required>
+  The root navigation configuration object.
+  
+  <Expandable title="Navigation Object">
+    <ResponseField name="tabs" type="array" required>
+      Array of tab objects that organize your documentation into major sections.
+    </ResponseField>
+    
+    <ResponseField name="global" type="object">
+      Global navigation elements like anchors that appear across all tabs.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Tabs
+
+Tabs are the top-level navigation elements that organize your documentation into major sections. Each tab can contain multiple groups of pages.
+
+<ResponseField name="tab" type="string" required>
+  The display name of the tab shown in the navigation.
+</ResponseField>
+
+<ResponseField name="groups" type="array" required>
+  Array of group objects containing the pages for this tab.
+</ResponseField>
+
+### Example from Mint Starter Kit
+
+```json
+"navigation": {
+  "tabs": [
+    {
+      "tab": "Guides",
+      "groups": [...]
+    },
+    {
+      "tab": "API reference",
+      "groups": [...]
+    }
+  ]
+}
+```
+
+## Groups
+
+Groups organize related pages within a tab. They appear as collapsible sections in the sidebar.
+
+<ResponseField name="group" type="string" required>
+  The display name of the group shown in the sidebar.
+</ResponseField>
+
+<ResponseField name="pages" type="array" required>
+  Array of page paths or nested group objects.
+</ResponseField>
+
+### Example Groups
+
+```json
+{
+  "tab": "Guides",
+  "groups": [
+    {
+      "group": "Getting started",
+      "pages": [
+        "index",
+        "quickstart",
+        "development"
+      ]
+    },
+    {
+      "group": "Customization",
+      "pages": [
+        "essentials/settings",
+        "essentials/navigation"
+      ]
+    }
+  ]
+}
+```
+
+## Pages
+
+Pages are the individual MDX files that make up your documentation content. Reference pages in the `pages` array using their file path relative to the root directory.
+
+<Note>
+  You don't need to include the `.mdx` extension in page paths.
+</Note>
+
+### Page Path Examples
 
 <CodeGroup>
+  ```json Root Level Page
+  "pages": ["quickstart"]
+  ```
 
-```json Regular Navigation
-"navigation": {
-  "tabs": [
-    {
-      "tab": "Docs",
-      "groups": [
-        {
-          "group": "Getting Started",
-          "pages": ["quickstart"]
-        }
-      ]
-    }
+  ```json Page in Folder
+  "pages": ["essentials/settings"]
+  ```
+
+  ```json Multiple Pages
+  "pages": [
+    "index",
+    "quickstart",
+    "development"
   ]
-}
-```
-
-```json Nested Navigation
-"navigation": {
-  "tabs": [
-    {
-      "tab": "Docs",
-      "groups": [
-        {
-          "group": "Getting Started",
-          "pages": [
-            "quickstart",
-            {
-              "group": "Nested Reference Pages",
-              "pages": ["nested-reference-page"]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-
+  ```
 </CodeGroup>
+
+## Nested Navigation
+
+The navigation syntax is recursive, allowing you to create nested groups within groups. This is useful for organizing complex documentation hierarchies.
+
+<CodeGroup>
+  ```json Regular Navigation
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["quickstart"]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+  ```json Nested Navigation
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "quickstart",
+              {
+                "group": "Nested Reference Pages",
+                "pages": ["nested-reference-page"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+</CodeGroup>
+
+## Global Navigation
+
+The `global` object contains navigation elements that appear across all tabs, such as anchors.
+
+### Anchors
+
+Anchors are external links displayed in the navigation sidebar with custom icons and colors.
+
+<ResponseField name="anchors" type="array">
+  Array of anchor objects linking to external resources.
+  
+  <Expandable title="Anchor Properties">
+    <ResponseField name="anchor" type="string" required>
+      The display text for the anchor
+    </ResponseField>
+    
+    <ResponseField name="href" type="string" required>
+      The URL the anchor links to
+    </ResponseField>
+    
+    <ResponseField name="icon" type="string" required>
+      Font Awesome icon name
+    </ResponseField>
+    
+    <ResponseField name="iconType" type="string" default="duotone">
+      One of: "brands", "duotone", "light", "sharp-solid", "solid", or "thin"
+    </ResponseField>
+    
+    <ResponseField name="color" type="string">
+      Hex color for the icon background. Can be a gradient object with `from` and `to` properties.
+    </ResponseField>
+    
+    <ResponseField name="isDefaultHidden" type="boolean" default={false}>
+      Set to `true` to hide the anchor until directly linked to
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Example Anchors
+
+```json
+"navigation": {
+  "tabs": [...],
+  "global": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "href": "https://mintlify.com/docs",
+        "icon": "book-open-cover"
+      },
+      {
+        "anchor": "Blog",
+        "href": "https://mintlify.com/blog",
+        "icon": "newspaper"
+      }
+    ]
+  }
+}
+```
 
 ## Folders
 
-Simply put your MDX files in folders and update the paths in `docs.json`.
+Organize your MDX files in folders to keep your project structure clean. Simply reference the folder path in your navigation.
 
-For example, to have a page at `https://yoursite.com/your-folder/your-page` you would make a folder called `your-folder` containing an MDX file called `your-page.mdx`.
+For example, to have a page at `https://yoursite.com/your-folder/your-page`, create a folder called `your-folder` containing an MDX file called `your-page.mdx`.
 
 <Warning>
-
-You cannot use `api` for the name of a folder unless you nest it inside another folder. Mintlify uses Next.js which reserves the top-level `api` folder for internal server calls. A folder name such as `api-reference` would be accepted.
-
+  You cannot use `api` for the name of a top-level folder. Mintlify uses Next.js which reserves the `api` folder for internal server calls. Use a name like `api-reference` instead, or nest it inside another folder.
 </Warning>
 
-```json Navigation With Folder
+### Example with Folders
+
+```json
 "navigation": {
   "tabs": [
     {
@@ -82,6 +275,137 @@ You cannot use `api` for the name of a folder unless you nest it inside another 
 }
 ```
 
-## Hidden pages
+## Hidden Pages
 
-MDX files not included in `docs.json` will not show up in the sidebar but are accessible through the search bar and by linking directly to them.
+MDX files not included in `docs.json` will not show up in the sidebar but are still accessible:
+
+- Through the search bar
+- By linking directly to them from other pages
+- Via direct URL access
+
+This is useful for:
+
+- Draft pages you're still working on
+- Legal pages like privacy policies
+- Landing pages with custom layouts
+- Pages accessed only through specific flows
+
+## Complete Example
+
+Here's the complete navigation configuration from the Mint Starter Kit:
+
+```json
+"navigation": {
+  "tabs": [
+    {
+      "tab": "Guides",
+      "groups": [
+        {
+          "group": "Getting started",
+          "pages": [
+            "index",
+            "quickstart",
+            "development"
+          ]
+        },
+        {
+          "group": "Customization",
+          "pages": [
+            "essentials/settings",
+            "essentials/navigation"
+          ]
+        },
+        {
+          "group": "Writing content",
+          "pages": [
+            "essentials/markdown",
+            "essentials/code",
+            "essentials/images",
+            "essentials/reusable-snippets"
+          ]
+        },
+        {
+          "group": "AI tools",
+          "pages": [
+            "ai-tools/cursor",
+            "ai-tools/claude-code",
+            "ai-tools/windsurf"
+          ]
+        }
+      ]
+    },
+    {
+      "tab": "API reference",
+      "groups": [
+        {
+          "group": "API documentation",
+          "pages": [
+            "api-reference/introduction"
+          ]
+        },
+        {
+          "group": "Endpoint examples",
+          "pages": [
+            "api-reference/endpoint/get",
+            "api-reference/endpoint/create",
+            "api-reference/endpoint/delete",
+            "api-reference/endpoint/webhook"
+          ]
+        }
+      ]
+    }
+  ],
+  "global": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "href": "https://mintlify.com/docs",
+        "icon": "book-open-cover"
+      },
+      {
+        "anchor": "Blog",
+        "href": "https://mintlify.com/blog",
+        "icon": "newspaper"
+      }
+    ]
+  }
+}
+```
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Logical Grouping" icon="layer-group">
+    Group related pages together to help users find content quickly. Keep groups focused on a single topic or workflow.
+  </Card>
+  
+  <Card title="Clear Naming" icon="tag">
+    Use descriptive names for tabs, groups, and pages. Avoid jargon and acronyms unless they're widely understood by your audience.
+  </Card>
+  
+  <Card title="Shallow Hierarchy" icon="sitemap">
+    Keep navigation shallow (2-3 levels max). Deep nesting makes content harder to discover and navigate.
+  </Card>
+  
+  <Card title="Consistent Structure" icon="grid">
+    Maintain consistent structure across tabs. Users should be able to predict where to find information.
+  </Card>
+</CardGroup>
+
+### Navigation Order Tips
+
+1. **Start with essentials** - Put getting started guides and quickstarts first
+2. **Follow user journey** - Order groups by typical user progression
+3. **Common to advanced** - Place frequently used pages before specialized content
+4. **Reference last** - Put API references and detailed specifications at the end
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Global Settings" icon="gear" href="/essentials/settings">
+    Configure theme, colors, and branding in docs.json
+  </Card>
+  <Card title="Markdown" icon="markdown" href="/essentials/markdown">
+    Learn how to write content with Markdown and MDX
+  </Card>
+</CardGroup>

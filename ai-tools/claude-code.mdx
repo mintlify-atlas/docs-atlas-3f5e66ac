@@ -4,18 +4,34 @@ description: "Configure Claude Code for your documentation workflow"
 icon: "asterisk"
 ---
 
-Set up Claude Code to help you write and maintain your Mintlify documentation.
+Set up Claude Code to help you write and maintain your Mintlify documentation with powerful AI assistance directly from your terminal.
 
 ## Prerequisites
 
 - Active Claude subscription (Pro, Max, or API access)
+- Node.js installed
+- A Mintlify documentation project
 
 ## Setup
 
 <Steps>
 <Step title="Install Claude Code">
+  Install the Claude Code CLI globally:
+  
   ```bash
   npm install -g @anthropic-ai/claude-code
+  ```
+  
+  <Note>
+    Claude Code requires an Anthropic API key. You'll be prompted to configure authentication on first run.
+  </Note>
+</Step>
+
+<Step title="Navigate to your docs directory">
+  Change to your documentation project root:
+  
+  ```bash
+  cd your-docs-project
   ```
 </Step>
 
@@ -28,16 +44,230 @@ Set up Claude Code to help you write and maintain your Mintlify documentation.
 
   This gives Claude Code Mintlify's component reference, writing standards,
   and workflow guidance.
+  
+  <Tip>
+    The Mintlify skill includes examples of proper MDX syntax, component usage, and documentation best practices.
+  </Tip>
 </Step>
 
 <Step title="Customize project instructions">
   Edit `AGENTS.md` in your project root to add project-specific terminology,
   style preferences, and content boundaries.
+  
+  Example configuration:
+  
+  ```markdown
+  ## About this project
+  
+  - API documentation for the Acme Platform
+  - Target audience: developers integrating our REST API
+  - All examples should use production-ready code
+  
+  ## Terminology
+  
+  - "API key" not "access token"
+  - "endpoint" not "route"
+  - "workspace" not "organization" or "team"
+  
+  ## Content boundaries
+  
+  - Document public API endpoints only
+  - Don't include deprecated endpoints
+  - Focus on practical use cases
+  ```
 </Step>
 
 <Step title="Start writing with Claude Code">
+  Launch Claude Code in your project:
+  
   ```bash
   claude
   ```
+  
+  You can now interact with Claude to create, edit, and improve your documentation.
 </Step>
 </Steps>
+
+## Using Claude Code with Mintlify
+
+<CardGroup cols={2}>
+  <Card title="Create complete pages" icon="file-lines">
+    Ask Claude to draft entire documentation pages with proper structure, frontmatter, and components.
+  </Card>
+  <Card title="Generate code examples" icon="bracket-curly">
+    Create multi-language code snippets with proper error handling and best practices.
+  </Card>
+  <Card title="Refactor documentation" icon="arrows-rotate">
+    Reorganize content, improve clarity, and update outdated information across multiple files.
+  </Card>
+  <Card title="Add visual elements" icon="image">
+    Insert Mintlify components like Cards, Accordions, and Tabs to enhance readability.
+  </Card>
+</CardGroup>
+
+## Example workflows
+
+### Creating a quickstart guide
+
+```bash
+claude
+```
+
+Then prompt:
+
+```
+Create a quickstart.mdx page that shows developers how to:
+1. Sign up and get an API key
+2. Make their first API request
+3. Handle the response
+
+Use <Steps> components and include code examples in cURL, Python, and JavaScript.
+```
+
+### Generating API reference pages
+
+<CodeGroup>
+```bash From OpenAPI spec
+claude "Generate API reference pages from openapi.yaml. Create one page per endpoint in the /api-reference directory. Include request/response examples and parameter descriptions."
+```
+
+```bash From existing code
+claude "Document this Express.js route as an API reference page. Include authentication, parameters, response format, and error codes."
+```
+</CodeGroup>
+
+### Improving existing content
+
+```bash
+claude "Review introduction.mdx and:
+- Simplify complex sentences
+- Add a <Card> showcasing key features
+- Ensure consistent terminology per AGENTS.md"
+```
+
+## Advanced features
+
+### Multi-file operations
+
+Claude Code excels at coordinating changes across multiple files:
+
+```
+Create a new 'Authentication' section with:
+- auth/overview.mdx - explain our auth model
+- auth/api-keys.mdx - how to generate and use keys
+- auth/oauth.mdx - OAuth 2.0 flow
+
+Update docs.json to add these to navigation under 'Authentication'.
+```
+
+### Maintaining consistency
+
+<Note>
+  Claude Code reads your entire project context, including `AGENTS.md`, existing pages, and `docs.json`. This ensures consistent terminology and style across all generated content.
+</Note>
+
+### Interactive refinement
+
+Claude Code supports conversational iteration:
+
+```
+You: Create a page about webhooks
+Claude: [generates page]
+You: Add a troubleshooting section with common issues
+Claude: [updates the page]
+You: Include a diagram showing the webhook flow
+Claude: [adds visual element]
+```
+
+## Best practices
+
+<Steps>
+<Step title="Be specific in your prompts">
+  Provide clear requirements including:
+  - Target audience (beginners, advanced developers)
+  - Desired components (Steps, CodeGroup, etc.)
+  - Code language preferences
+  - Specific sections to include
+</Step>
+
+<Step title="Reference existing content">
+  Point Claude to similar pages as examples:
+  
+  ```
+  Create a page similar to quickstart.mdx but for our GraphQL API instead of REST.
+  ```
+</Step>
+
+<Step title="Review and test">
+  Always verify:
+  - Code examples run correctly
+  - Links are valid
+  - Component syntax is correct
+  - Content matches your product's actual behavior
+</Step>
+
+<Step title="Use version control">
+  Commit changes incrementally so you can review diffs and rollback if needed:
+  
+  ```bash
+  git add -p
+  git commit -m "Add webhook documentation"
+  ```
+</Step>
+</Steps>
+
+## Common commands
+
+| Command | Purpose |
+|---------|----------|
+| `claude` | Start interactive session |
+| `claude "prompt"` | Execute single command |
+| `claude --help` | View all options |
+| `exit` or `Ctrl+D` | End session |
+
+## Tips for better results
+
+<CardGroup cols={2}>
+  <Card title="Provide examples" icon="lightbulb">
+    Show Claude existing pages you like and ask it to follow the same style.
+  </Card>
+  <Card title="Iterate in steps" icon="stairs">
+    Break complex tasks into smaller steps. Create structure first, then add examples, then polish.
+  </Card>
+  <Card title="Use the codebase" icon="folder-tree">
+    Reference your actual API code so Claude can generate accurate documentation.
+  </Card>
+  <Card title="Keep AGENTS.md updated" icon="pen-to-square">
+    Update project instructions as your documentation standards evolve.
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Authentication errors">
+  Ensure your Anthropic API key is configured:
+  
+  ```bash
+  claude config set api_key YOUR_API_KEY
+  ```
+</Accordion>
+
+<Accordion title="Claude doesn't know about Mintlify components">
+  Verify the Mintlify skill is installed:
+  
+  ```bash
+  ls .skills/mintlify.com-docs/
+  ```
+  
+  If missing, run `npx skills add https://mintlify.com/docs` again.
+</Accordion>
+
+<Accordion title="Generated code doesn't match our style">
+  Add specific examples to `AGENTS.md` showing your preferred code style. Include both good examples and anti-patterns to avoid. This helps Claude generate code that matches your team's conventions.
+</Accordion>
+</AccordionGroup>
+
+<Tip>
+  Claude Code works great for batch operations. Try prompting: "Review all pages in /api-reference and ensure they follow the same structure."
+</Tip>

@@ -4,17 +4,23 @@ description: "Configure Windsurf for your documentation workflow"
 icon: "water"
 ---
 
-Set up Windsurf's Cascade AI assistant to help you write and maintain your Mintlify documentation.
+Set up Windsurf's Cascade AI assistant to help you write and maintain your Mintlify documentation with intelligent, context-aware assistance.
 
 ## Prerequisites
 
 - Windsurf editor installed
+- A Mintlify documentation project
 
 ## Setup
 
 <Steps>
 <Step title="Open your docs directory in Windsurf">
   Open the root of your documentation repository where `docs.json` is located.
+  
+  ```bash
+  cd your-docs-project
+  windsurf .
+  ```
 </Step>
 
 <Step title="Install the Mintlify skill">
@@ -26,14 +32,298 @@ Set up Windsurf's Cascade AI assistant to help you write and maintain your Mintl
 
   This gives Windsurf Mintlify's component reference, writing standards,
   and workflow guidance.
+  
+  <Tip>
+    The Mintlify skill teaches Cascade about MDX syntax, available components, and documentation best practices.
+  </Tip>
 </Step>
 
 <Step title="Customize project instructions">
   Edit `AGENTS.md` in your project root to add project-specific terminology,
   style preferences, and content boundaries.
+  
+  Example customizations:
+  
+  ```markdown
+  ## About this project
+  
+  - SaaS platform documentation
+  - Audience: technical decision makers and developers
+  - Tone: professional but approachable
+  
+  ## Terminology
+  
+  - "organization" not "company" or "account"
+  - "integration" not "plugin" or "connector"
+  - "dashboard" not "console" or "portal"
+  
+  ## Style preferences
+  
+  - Use sentence case for all headings
+  - Include a use case for every feature
+  - Code examples in TypeScript and Python only
+  
+  ## Content boundaries
+  
+  - Focus on production features only
+  - Don't document beta features
+  - Avoid implementation details
+  ```
 </Step>
 
 <Step title="Start writing with Cascade">
   Open a file and use Cascade to draft and edit documentation.
+  
+  Access Cascade with:
+  - Click the Cascade icon in the sidebar
+  - Use keyboard shortcut `Cmd/Ctrl+Shift+C`
+  - Right-click and select "Ask Cascade"
 </Step>
 </Steps>
+
+## Using Windsurf with Mintlify
+
+<CardGroup cols={2}>
+  <Card title="Intelligent drafting" icon="pen-fancy">
+    Cascade understands your codebase and can draft documentation that accurately reflects your API and features.
+  </Card>
+  <Card title="Multi-file editing" icon="files">
+    Make coordinated changes across multiple documentation pages while maintaining consistency.
+  </Card>
+  <Card title="Context-aware suggestions" icon="brain">
+    Get inline suggestions that respect your documentation style and terminology guidelines.
+  </Card>
+  <Card title="Component insertion" icon="puzzle-piece">
+    Easily add Mintlify components like Steps, Card, and CodeGroup with proper syntax.
+  </Card>
+</CardGroup>
+
+## Example workflows
+
+### Creating a tutorial page
+
+Ask Cascade:
+
+```
+Create a tutorial page teaching users how to build their first workflow.
+Use <Steps> to guide them through:
+1. Creating a new workflow
+2. Adding triggers
+3. Configuring actions
+4. Testing and deploying
+
+Include code examples and screenshots placeholders.
+```
+
+### Adding code examples to existing pages
+
+Select a section describing an API endpoint, then prompt:
+
+```
+Add a CodeGroup with examples in cURL, Python, and JavaScript
+showing how to call this endpoint. Include authentication headers
+and a sample response.
+```
+
+### Restructuring documentation
+
+For larger reorganizations:
+
+```
+Restructure the 'Getting Started' section:
+1. Move authentication content to a new auth/overview.mdx
+2. Create a dedicated quickstart.mdx with a 5-minute guide
+3. Update navigation in docs.json
+4. Ensure all internal links still work
+```
+
+## Cascade features for documentation
+
+### Flow mode
+
+Cascade's Flow mode provides continuous, context-aware assistance as you write:
+
+<Steps>
+<Step title="Enable Flow mode">
+  Click the Flow toggle in the Cascade panel or use `Cmd/Ctrl+Shift+F`.
+</Step>
+
+<Step title="Write naturally">
+  Start typing your documentation. Cascade will offer inline completions that match your style.
+</Step>
+
+<Step title="Accept or modify">
+  Press `Tab` to accept suggestions, or keep typing to ignore them.
+</Step>
+</Steps>
+
+<Note>
+  Flow mode learns from your `AGENTS.md` file and existing documentation to provide consistent suggestions.
+</Note>
+
+### Command mode
+
+For specific tasks, use Command mode:
+
+```
+Cascade, add error handling examples to all API endpoint pages
+under /api-reference. Include common HTTP status codes and
+their meanings.
+```
+
+### Search and replace
+
+Update terminology across your entire documentation:
+
+```
+Find all instances of "workspace" and replace with "organization"
+in the /guides directory. Update AGENTS.md to reflect this change.
+```
+
+## Best practices
+
+<Steps>
+<Step title="Provide clear context">
+  When asking Cascade to create content, specify:
+  - Target audience and their experience level
+  - Desired outcome (what should readers be able to do?)
+  - Preferred components and structure
+  - Any constraints (length, complexity, etc.)
+</Step>
+
+<Step title="Use the codebase as reference">
+  Cascade can read your source code. Reference files directly:
+  
+  ```
+  Document the authentication flow based on src/auth/middleware.ts.
+  Create a page showing how developers implement it.
+  ```
+</Step>
+
+<Step title="Review before committing">
+  Always verify:
+  - Technical accuracy
+  - Code examples work correctly
+  - Links are valid
+  - Terminology matches `AGENTS.md`
+  - Components render properly (run `mint dev`)
+</Step>
+
+<Step title="Iterate with feedback">
+  Cascade responds well to refinement requests:
+  
+  ```
+  Make this section more concise
+  Add a tip about common gotchas
+  Include a real-world example
+  ```
+</Step>
+</Steps>
+
+## Keyboard shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl+Shift+C` | Open Cascade panel |
+| `Cmd/Ctrl+Shift+F` | Toggle Flow mode |
+| `Tab` | Accept suggestion |
+| `Esc` | Dismiss suggestion |
+| `Cmd/Ctrl+K` | Quick command |
+
+## Integration with Mintlify CLI
+
+Combine Windsurf with Mintlify's local development:
+
+<Steps>
+<Step title="Start Mintlify dev server">
+  In the terminal:
+  
+  ```bash
+  mint dev
+  ```
+</Step>
+
+<Step title="Make changes with Cascade">
+  Ask Cascade to create or update documentation pages.
+</Step>
+
+<Step title="Preview in real-time">
+  View your changes at `http://localhost:3000` as Cascade edits files.
+</Step>
+
+<Step title="Iterate quickly">
+  See the rendered result, then ask Cascade to refine based on what you see.
+</Step>
+</Steps>
+
+## Advanced tips
+
+<CardGroup cols={2}>
+  <Card title="Template creation" icon="file-code">
+    Create page templates for common documentation types (API reference, tutorial, concept) and ask Cascade to fill them in.
+  </Card>
+  <Card title="Batch operations" icon="layer-group">
+    Update multiple pages simultaneously: "Add a prerequisites section to all tutorial pages."
+  </Card>
+  <Card title="Style enforcement" icon="paint-roller">
+    Periodically ask: "Review all pages and ensure they follow the style guide in AGENTS.md."
+  </Card>
+  <Card title="Accessibility checks" icon="universal-access">
+    Prompt: "Review image alt text and ensure all code examples have language tags."
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Cascade doesn't suggest Mintlify components">
+  Ensure you've installed the Mintlify skill:
+  
+  ```bash
+  npx skills add https://mintlify.com/docs
+  ```
+  
+  Restart Windsurf after installation for changes to take effect.
+</Accordion>
+
+<Accordion title="Suggestions don't match our style">
+  Update `AGENTS.md` with more specific examples:
+  
+  ```markdown
+  ## Style preferences
+  
+  ✅ Preferred:
+  Click **Settings** to open the configuration panel.
+  
+  ❌ Avoid:
+  Click on the Settings button to open up the panel where you configure things.
+  ```
+  
+  Cascade learns from these examples.
+</Accordion>
+
+<Accordion title="Flow mode is too aggressive">
+  Adjust Flow sensitivity in Windsurf settings:
+  - Open Settings > Cascade > Flow Mode
+  - Lower the suggestion frequency
+  - Or disable Flow and use Command mode for explicit requests
+</Accordion>
+
+<Accordion title="Cascade modifies the wrong files">
+  Be explicit about file scope:
+  
+  ```
+  Update only the files in /api-reference/users/ to include rate limit information.
+  ```
+</Accordion>
+</AccordionGroup>
+
+## Community resources
+
+<Card title="Share your workflow" icon="users">
+  Join the [Mintlify community](https://mintlify.com/community) to share tips, templates, and workflows for using Windsurf with your documentation.
+</Card>
+
+<Tip>
+  Cascade works best when your `AGENTS.md` includes real examples from your documentation. Add before/after samples to guide its suggestions.
+</Tip>

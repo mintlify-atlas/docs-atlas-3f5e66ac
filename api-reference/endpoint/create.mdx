@@ -2,3 +2,158 @@
 title: 'Create Plant'
 openapi: 'POST /plants'
 ---
+
+Creates a new plant in the store. This endpoint allows you to add plants to your inventory with a name and optional tag.
+
+## Request
+
+### Body Parameters
+
+<ParamField body="name" type="string" required>
+  The name of the plant you want to add to the store. This field is required.
+</ParamField>
+
+<ParamField body="tag" type="string">
+  Optional tag to categorize the plant (e.g., "succulent", "flowering", "fern", "tropical").
+</ParamField>
+
+### Request Body Example
+
+```json
+{
+  "name": "Monstera Deliciosa",
+  "tag": "tropical"
+}
+```
+
+## Response
+
+<ResponseField name="name" type="string" required>
+  The name of the plant that was created
+</ResponseField>
+
+<ResponseField name="tag" type="string">
+  The tag associated with the plant, if provided
+</ResponseField>
+
+### Success Response
+
+```json 200
+{
+  "name": "Monstera Deliciosa",
+  "tag": "tropical"
+}
+```
+
+### Error Response
+
+```json 400
+{
+  "error": 400,
+  "message": "Invalid plant data provided"
+}
+```
+
+## Example Requests
+
+<CodeGroup>
+
+```bash cURL
+curl --request POST \
+  --url http://sandbox.mintlify.com/plants \
+  --header 'Authorization: Bearer YOUR_API_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Monstera Deliciosa",
+    "tag": "tropical"
+  }'
+```
+
+```javascript JavaScript
+const plantData = {
+  name: 'Monstera Deliciosa',
+  tag: 'tropical'
+};
+
+const response = await fetch('http://sandbox.mintlify.com/plants', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(plantData)
+});
+
+const newPlant = await response.json();
+console.log(newPlant);
+```
+
+```python Python
+import requests
+import json
+
+url = 'http://sandbox.mintlify.com/plants'
+headers = {
+    'Authorization': 'Bearer YOUR_API_TOKEN',
+    'Content-Type': 'application/json'
+}
+data = {
+    'name': 'Monstera Deliciosa',
+    'tag': 'tropical'
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(data))
+new_plant = response.json()
+print(new_plant)
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+$data = [
+  'name' => 'Monstera Deliciosa',
+  'tag' => 'tropical'
+];
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'http://sandbox.mintlify.com/plants',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => json_encode($data),
+  CURLOPT_HTTPHEADER => [
+    'Authorization: Bearer YOUR_API_TOKEN',
+    'Content-Type: application/json'
+  ],
+]);
+
+$response = curl_exec($curl);
+curl_close($curl);
+
+$new_plant = json_decode($response);
+print_r($new_plant);
+?>
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Inventory management**: Add new plants to your store's inventory
+- **User submissions**: Allow users to contribute new plants to the catalog
+- **Bulk imports**: Create plants programmatically from external data sources
+- **Product catalog**: Build and maintain your plant product offerings
+
+## Validation Rules
+
+- The `name` field is required and cannot be empty
+- The `tag` field is optional but should be a valid string if provided
+- Plant names should be unique to avoid duplicates (implementation-dependent)
+
+## Best Practices
+
+- Always validate plant data on the client side before sending the request
+- Include descriptive tags to make plants easier to categorize and search
+- Handle success and error responses appropriately
+- Consider implementing duplicate detection before creating new plants
+- Use meaningful plant names that help users identify the species

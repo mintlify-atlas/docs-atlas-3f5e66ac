@@ -1,63 +1,124 @@
 ---
 title: 'Markdown syntax'
-description: 'Text, title, and styling in standard markdown'
+description: 'Write content using MDX with support for standard markdown and Mintlify components'
 icon: 'text-size'
 ---
 
-## Titles
+Mintlify documentation is built with MDX, an extension of Markdown that supports JSX components. You can use standard markdown syntax alongside powerful Mintlify components to create rich, interactive documentation.
 
-Best used for section headers.
+## Frontmatter
 
-```md
-## Titles
+Every MDX page starts with YAML frontmatter that defines metadata:
+
+```yaml
+---
+title: 'Page title'
+description: 'Page description for SEO'
+icon: 'icon-name'
+---
 ```
 
-### Subtitles
+<Note>
+The `title` and `description` fields are required. The `icon` field is optional and uses [Font Awesome](https://fontawesome.com/icons) icon names.
+</Note>
 
-Best used for subsection headers.
+## Headings
+
+Use heading levels to structure your content. Each heading automatically creates an anchor link and appears in the table of contents.
 
 ```md
-### Subtitles
+## Main section heading
+
+### Subsection heading
+
+#### Minor heading
 ```
 
 <Tip>
-
-Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
-
+Each **heading** creates an anchor and shows up in the table of contents on the right side of the page.
 </Tip>
 
 ## Text formatting
 
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
+Mintlify supports all standard markdown formatting options:
 
-| Style         | How to write it   | Result          |
+| Style         | Syntax            | Result          |
 | ------------- | ----------------- | --------------- |
 | Bold          | `**bold**`        | **bold**        |
 | Italic        | `_italic_`        | _italic_        |
 | Strikethrough | `~strikethrough~` | ~strikethrough~ |
 
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
+You can combine formatting styles: `**_bold and italic_**` produces **_bold and italic_** text.
 
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
+### Superscript and subscript
 
-| Text Size   | How to write it          | Result                 |
+Use HTML tags for superscript and subscript text:
+
+| Style       | Syntax                   | Result                 |
 | ----------- | ------------------------ | ---------------------- |
 | Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
 | Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
 
-## Linking to pages
+## Lists
 
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
+### Unordered lists
 
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
+Create bullet lists with `-`, `*`, or `+`:
 
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
+```md
+- First item
+- Second item
+- Third item
+```
+
+### Ordered lists
+
+Create numbered lists with `1.`, `2.`, etc.:
+
+```md
+1. First step
+2. Second step
+3. Third step
+```
+
+### Nested lists
+
+Indent items with spaces to create nested lists:
+
+```md
+- Parent item
+  - Nested item
+  - Another nested item
+- Another parent item
+```
+
+## Links
+
+### External links
+
+Create links by wrapping text in `[]` followed by the URL in `()`:
+
+```md
+[Link to Google](https://google.com)
+```
+
+### Internal links
+
+Links to pages in your docs should be root-relative paths:
+
+```md
+[Link to another page](/essentials/code)
+```
+
+<Warning>
+Avoid relative links like `../code`. Root-relative links load faster because Mintlify can optimize them.
+</Warning>
 
 ## Blockquotes
 
-### Singleline
+### Single-line blockquotes
 
-To create a blockquote, add a `>` in front of a paragraph.
+Add a `>` before a paragraph:
 
 > Dorothy followed her through many of the beautiful rooms in her castle.
 
@@ -65,7 +126,9 @@ To create a blockquote, add a `>` in front of a paragraph.
 > Dorothy followed her through many of the beautiful rooms in her castle.
 ```
 
-### Multiline
+### Multi-line blockquotes
+
+Use `>` on each line:
 
 > Dorothy followed her through many of the beautiful rooms in her castle.
 >
@@ -77,12 +140,125 @@ To create a blockquote, add a `>` in front of a paragraph.
 > The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
 ```
 
-### LaTeX
+## Callout components
 
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
+Mintlify provides callout components to highlight important information:
 
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+### Note
+
+<Note>
+Use notes for general information that helps users understand the context.
+</Note>
+
+```mdx
+<Note>
+Use notes for general information that helps users understand the context.
+</Note>
+```
+
+### Tip
+
+<Tip>
+Use tips to share helpful advice or best practices.
+</Tip>
+
+```mdx
+<Tip>
+Use tips to share helpful advice or best practices.
+</Tip>
+```
+
+### Warning
+
+<Warning>
+Use warnings to alert users about potential issues or important caveats.
+</Warning>
+
+```mdx
+<Warning>
+Use warnings to alert users about potential issues or important caveats.
+</Warning>
+```
+
+### Info
+
+<Info>
+Use info callouts for supplementary information that adds context.
+</Info>
+
+```mdx
+<Info>
+Use info callouts for supplementary information that adds context.
+</Info>
+```
+
+## Cards
+
+Use the `<Card>` and `<CardGroup>` components to create interactive card layouts:
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="rocket" href="/quickstart">
+    Learn how to set up your documentation site
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference">
+    Explore the API endpoints and examples
+  </Card>
+</CardGroup>
+
+```mdx
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="rocket" href="/quickstart">
+    Learn how to set up your documentation site
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference">
+    Explore the API endpoints and examples
+  </Card>
+</CardGroup>
+```
+
+## Tables
+
+Create tables using markdown syntax:
 
 ```md
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Row 1    | Data     | Data     |
+| Row 2    | Data     | Data     |
+```
+
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Row 1    | Data     | Data     |
+| Row 2    | Data     | Data     |
+
+## LaTeX
+
+Mintlify supports mathematical expressions using the `<Latex>` component:
+
+<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+
+```mdx
 <Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
 ```
+
+## Horizontal rules
+
+Create dividers with three dashes:
+
+```md
+---
+```
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Code blocks" icon="code" href="/essentials/code">
+    Learn how to display code with syntax highlighting
+  </Card>
+  <Card title="Images" icon="image" href="/essentials/images">
+    Add images and media to your documentation
+  </Card>
+</CardGroup>

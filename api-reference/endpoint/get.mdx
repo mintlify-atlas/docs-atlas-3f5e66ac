@@ -2,3 +2,133 @@
 title: 'Get Plants'
 openapi: 'GET /plants'
 ---
+
+Returns all plants from the system that the user has access to. This endpoint supports pagination through the `limit` query parameter.
+
+## Request
+
+### Query Parameters
+
+<ParamField query="limit" type="integer" default="10">
+  The maximum number of results to return. Use this parameter to control pagination and limit the response size.
+</ParamField>
+
+## Response
+
+<ResponseField name="plants" type="array">
+  An array of plant objects
+  
+  <Expandable title="Plant object">
+    <ResponseField name="name" type="string" required>
+      The name of the plant
+    </ResponseField>
+    
+    <ResponseField name="tag" type="string">
+      Tag to specify the type of plant (e.g., "succulent", "flowering", "fern")
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Success Response
+
+```json 200
+[
+  {
+    "name": "Monstera Deliciosa",
+    "tag": "tropical"
+  },
+  {
+    "name": "Snake Plant",
+    "tag": "succulent"
+  },
+  {
+    "name": "Peace Lily",
+    "tag": "flowering"
+  }
+]
+```
+
+### Error Response
+
+```json 400
+{
+  "error": 400,
+  "message": "Invalid request parameters"
+}
+```
+
+## Example Requests
+
+<CodeGroup>
+
+```bash cURL
+curl --request GET \
+  --url 'http://sandbox.mintlify.com/plants?limit=10' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+```javascript JavaScript
+const response = await fetch('http://sandbox.mintlify.com/plants?limit=10', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN',
+    'Content-Type': 'application/json'
+  }
+});
+
+const plants = await response.json();
+console.log(plants);
+```
+
+```python Python
+import requests
+
+url = 'http://sandbox.mintlify.com/plants'
+headers = {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+}
+params = {
+    'limit': 10
+}
+
+response = requests.get(url, headers=headers, params=params)
+plants = response.json()
+print(plants)
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => 'http://sandbox.mintlify.com/plants?limit=10',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HTTPHEADER => [
+    'Authorization: Bearer YOUR_API_TOKEN',
+    'Content-Type: application/json'
+  ],
+]);
+
+$response = curl_exec($curl);
+curl_close($curl);
+
+$plants = json_decode($response);
+print_r($plants);
+?>
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Display plant inventory**: Retrieve all available plants to show in your application
+- **Search functionality**: Use with client-side filtering to implement search
+- **Pagination**: Control the number of results returned per request
+- **Catalog browsing**: Allow users to browse through your plant collection
+
+## Best Practices
+
+- Use the `limit` parameter to control response size and improve performance
+- Implement client-side caching to reduce unnecessary API calls
+- Handle error responses gracefully in your application
+- Consider implementing pagination if you have a large number of plants

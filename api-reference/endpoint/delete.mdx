@@ -2,3 +2,134 @@
 title: 'Delete Plant'
 openapi: 'DELETE /plants/{id}'
 ---
+
+Deletes a single plant from the store based on the ID supplied. This operation is permanent and cannot be undone.
+
+## Request
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The unique identification number of the plant to delete. This must be a valid plant ID that exists in the store.
+</ParamField>
+
+## Response
+
+### Success Response
+
+```json 204
+// No content returned on successful deletion
+```
+
+A `204 No Content` status code indicates the plant was successfully deleted from the store.
+
+### Error Response
+
+```json 400
+{
+  "error": 400,
+  "message": "Plant not found or invalid ID"
+}
+```
+
+## Example Requests
+
+<CodeGroup>
+
+```bash cURL
+curl --request DELETE \
+  --url http://sandbox.mintlify.com/plants/123 \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+```javascript JavaScript
+const plantId = 123;
+
+const response = await fetch(`http://sandbox.mintlify.com/plants/${plantId}`, {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+  }
+});
+
+if (response.status === 204) {
+  console.log('Plant successfully deleted');
+}
+```
+
+```python Python
+import requests
+
+plant_id = 123
+url = f'http://sandbox.mintlify.com/plants/{plant_id}'
+headers = {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+}
+
+response = requests.delete(url, headers=headers)
+
+if response.status_code == 204:
+    print('Plant successfully deleted')
+```
+
+```php PHP
+<?php
+$plant_id = 123;
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "http://sandbox.mintlify.com/plants/{$plant_id}",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => [
+    'Authorization: Bearer YOUR_API_TOKEN'
+  ],
+]);
+
+$response = curl_exec($curl);
+$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($status_code === 204) {
+    echo 'Plant successfully deleted';
+}
+?>
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Inventory management**: Remove plants that are no longer available
+- **User actions**: Allow authorized users to delete plants from the catalog
+- **Data cleanup**: Remove duplicate or invalid plant entries
+- **Product lifecycle**: Retire discontinued plants from the store
+
+## Important Considerations
+
+<Warning>
+  Deleting a plant is a permanent action and cannot be undone. Make sure to confirm the deletion with users before proceeding.
+</Warning>
+
+- Verify the plant ID exists before attempting deletion
+- Implement proper authorization to ensure only authorized users can delete plants
+- Consider implementing soft deletes for data recovery purposes
+- Handle the 204 status code appropriately in your application (no response body)
+
+## Error Handling
+
+Common error scenarios:
+
+- **404 Not Found**: The specified plant ID does not exist
+- **401 Unauthorized**: Invalid or missing authentication token
+- **403 Forbidden**: User lacks permission to delete plants
+- **400 Bad Request**: Invalid plant ID format
+
+## Best Practices
+
+- Always validate the plant ID before making the delete request
+- Implement confirmation dialogs in your UI before deletion
+- Log deletion actions for audit purposes
+- Consider implementing cascade deletions if plants have related data
+- Handle network errors and timeouts gracefully
+- Provide clear feedback to users about successful deletions

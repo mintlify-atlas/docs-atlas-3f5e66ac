@@ -2,3 +2,201 @@
 title: 'New Plant'
 openapi: 'WEBHOOK /plant/webhook'
 ---
+
+Receive real-time notifications when a new plant is added to the store. This webhook allows you to stay synchronized with plant inventory changes.
+
+## Overview
+
+Webhooks provide a way for the Plant Store API to send you real-time information when certain events occur. When a new plant is added to the store, we'll send a POST request to your configured webhook URL.
+
+## Webhook Request
+
+When a new plant is added, you'll receive a POST request with the following payload:
+
+### Request Body
+
+<ParamField body="name" type="string" required>
+  The name of the newly added plant
+</ParamField>
+
+<ParamField body="tag" type="string">
+  Optional tag categorizing the plant type
+</ParamField>
+
+### Webhook Payload Example
+
+```json
+{
+  "name": "Monstera Deliciosa",
+  "tag": "tropical"
+}
+```
+
+## Your Response
+
+Your webhook endpoint should return a `200 OK` status code to indicate that the data was received successfully.
+
+```json 200
+{
+  "received": true
+}
+```
+
+If your endpoint doesn't respond with a 200 status code, the webhook delivery may be retried.
+
+## Setting Up Your Webhook
+
+To receive webhook notifications, you need to:
+
+1. Create an endpoint on your server that accepts POST requests
+2. Configure the webhook URL in your Plant Store API settings
+3. Implement proper authentication and validation
+4. Return a 200 status code upon successful receipt
+
+## Example Implementation
+
+<CodeGroup>
+
+```javascript Express.js
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/plant/webhook', (req, res) => {
+  const { name, tag } = req.body;
+  
+  console.log('New plant added:', name);
+  console.log('Tag:', tag);
+  
+  // Process the webhook data
+  // Add your business logic here
+  
+  // Return 200 to acknowledge receipt
+  res.status(200).json({ received: true });
+});
+
+app.listen(3000, () => {
+  console.log('Webhook server listening on port 3000');
+});
+```
+
+```python Flask
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/plant/webhook', methods=['POST'])
+def plant_webhook():
+    data = request.json
+    name = data.get('name')
+    tag = data.get('tag')
+    
+    print(f'New plant added: {name}')
+    print(f'Tag: {tag}')
+    
+    # Process the webhook data
+    # Add your business logic here
+    
+    # Return 200 to acknowledge receipt
+    return jsonify({'received': True}), 200
+
+if __name__ == '__main__':
+    app.run(port=3000)
+```
+
+```php PHP
+<?php
+// webhook.php
+
+header('Content-Type: application/json');
+
+$payload = file_get_contents('php://input');
+$data = json_decode($payload, true);
+
+$name = $data['name'] ?? '';
+$tag = $data['tag'] ?? '';
+
+error_log("New plant added: {$name}");
+error_log("Tag: {$tag}");
+
+// Process the webhook data
+// Add your business logic here
+
+// Return 200 to acknowledge receipt
+http_response_code(200);
+echo json_encode(['received' => true]);
+?>
+```
+
+```javascript Next.js
+// pages/api/webhook/plant.js
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+  
+  const { name, tag } = req.body;
+  
+  console.log('New plant added:', name);
+  console.log('Tag:', tag);
+  
+  // Process the webhook data
+  // Add your business logic here
+  
+  // Return 200 to acknowledge receipt
+  res.status(200).json({ received: true });
+}
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Inventory synchronization**: Keep your local database in sync with the plant store
+- **Notifications**: Alert team members when new plants are added
+- **Analytics**: Track plant additions for business intelligence
+- **Automation**: Trigger workflows when new inventory arrives
+- **Third-party integrations**: Update external systems automatically
+
+## Security Best Practices
+
+<Warning>
+  Always validate webhook requests to ensure they're coming from the Plant Store API.
+</Warning>
+
+- **Verify webhook signatures**: Implement signature verification to validate requests
+- **Use HTTPS**: Always use HTTPS endpoints for webhooks
+- **Validate payload**: Check that the received data matches expected schema
+- **Implement rate limiting**: Protect against potential abuse
+- **Log webhook events**: Keep records of received webhooks for debugging
+
+## Retry Policy
+
+If your webhook endpoint is unavailable or returns an error status code:
+
+- The webhook will be retried up to 3 times
+- Retries use exponential backoff (5s, 25s, 125s)
+- After 3 failed attempts, the webhook delivery is marked as failed
+
+## Debugging Webhooks
+
+- Check your server logs for incoming requests
+- Verify your endpoint is publicly accessible
+- Test with tools like ngrok for local development
+- Monitor response times to ensure quick acknowledgment
+- Use webhook testing tools to simulate deliveries
+
+## Webhook Headers
+
+Each webhook request includes these headers:
+
+```bash
+Content-Type: application/json
+User-Agent: PlantStore-Webhook/1.0
+X-Webhook-Event: plant.created
+X-Webhook-Signature: sha256=<signature>
+```
+
+Use the `X-Webhook-Signature` header to verify the authenticity of the request.

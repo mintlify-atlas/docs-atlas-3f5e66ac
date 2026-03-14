@@ -4,17 +4,23 @@ description: "Configure Cursor for your documentation workflow"
 icon: "arrow-pointer"
 ---
 
-Set up Cursor to help you write and maintain your Mintlify documentation.
+Set up Cursor to help you write and maintain your Mintlify documentation with AI-powered assistance.
 
 ## Prerequisites
 
 - Cursor editor installed
+- A Mintlify documentation project
 
 ## Setup
 
 <Steps>
 <Step title="Open your docs directory in Cursor">
   Open the root of your documentation repository where `docs.json` is located.
+  
+  ```bash
+  cd your-docs-project
+  cursor .
+  ```
 </Step>
 
 <Step title="Install the Mintlify skill">
@@ -26,14 +32,142 @@ Set up Cursor to help you write and maintain your Mintlify documentation.
 
   This gives Cursor Mintlify's component reference, writing standards,
   and workflow guidance.
+  
+  <Tip>
+    The skill installation creates a `.skills/` directory in your project with Mintlify-specific knowledge.
+  </Tip>
 </Step>
 
 <Step title="Customize project instructions">
   Edit `AGENTS.md` in your project root to add project-specific terminology,
   style preferences, and content boundaries.
+  
+  Example customizations:
+  
+  ```markdown
+  ## Terminology
+  
+  - Use "workspace" not "project"
+  - Use "member" not "user"
+  - Refer to our product as "Acme Platform"
+  
+  ## Style preferences
+  
+  - Keep code examples in TypeScript
+  - Always include error handling examples
+  - Use real-world use cases from our customers
+  
+  ## Content boundaries
+  
+  - Don't document internal admin features
+  - Focus on public API endpoints only
+  ```
 </Step>
 
 <Step title="Start writing with Cursor">
   Open a file and use Cursor's AI features to draft and edit documentation.
+  
+  Try asking Cursor:
+  - "Create a quickstart guide for setting up authentication"
+  - "Add a code example showing how to make an API request"
+  - "Improve the clarity of this explanation"
 </Step>
 </Steps>
+
+## Using Cursor with Mintlify
+
+<CardGroup cols={2}>
+  <Card title="Draft new pages" icon="file-plus">
+    Ask Cursor to create complete documentation pages with proper frontmatter, structure, and Mintlify components.
+  </Card>
+  <Card title="Add code examples" icon="code">
+    Generate multi-language code examples wrapped in `<CodeGroup>` components.
+  </Card>
+  <Card title="Improve clarity" icon="wand-magic-sparkles">
+    Highlight text and ask Cursor to simplify or clarify technical explanations.
+  </Card>
+  <Card title="Update navigation" icon="bars">
+    Request updates to `docs.json` when adding new pages to your documentation.
+  </Card>
+</CardGroup>
+
+## Example workflows
+
+### Creating a new API endpoint page
+
+Select your OpenAPI spec or existing endpoint code, then prompt:
+
+```
+Create a documentation page for this endpoint. Include:
+- Description and use case
+- Authentication requirements
+- Request/response examples in multiple languages
+- Common error codes
+```
+
+### Adding interactive components
+
+Prompt Cursor to enhance your documentation:
+
+```
+Add a <Steps> component to walk through this setup process.
+Include code blocks with proper syntax highlighting.
+```
+
+### Maintaining consistency
+
+<Note>
+  Cursor reads your `AGENTS.md` file automatically. Update it whenever your terminology or style guidelines change to keep all AI-generated content consistent.
+</Note>
+
+## Best practices
+
+<Steps>
+<Step title="Review AI-generated content">
+  Always review and test code examples before publishing. Verify that:
+  - Code syntax is correct
+  - Examples match your actual API behavior
+  - Links point to valid destinations
+</Step>
+
+<Step title="Use Composer for complex changes">
+  For multi-file updates or major restructuring, use Cursor's Composer feature (Cmd/Ctrl+I) to coordinate changes across your documentation.
+</Step>
+
+<Step title="Leverage context">
+  Tag relevant files with `@filename` to give Cursor context about your codebase, API structure, or existing documentation style.
+</Step>
+
+<Step title="Iterate incrementally">
+  Make small, focused requests rather than asking for large changes all at once. This produces better results and makes review easier.
+</Step>
+</Steps>
+
+## Keyboard shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl+K` | Open Cursor chat |
+| `Cmd/Ctrl+I` | Open Composer for multi-file edits |
+| `Cmd/Ctrl+L` | Generate code inline |
+| `Tab` | Accept AI suggestion |
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Cursor doesn't know about Mintlify components">
+  Make sure you've run `npx skills add https://mintlify.com/docs` in your project directory. Restart Cursor after installation.
+</Accordion>
+
+<Accordion title="Generated code doesn't match our style">
+  Update your `AGENTS.md` file with specific style requirements and examples. The more detailed your instructions, the better Cursor's output.
+</Accordion>
+
+<Accordion title="AI suggestions are slow or not appearing">
+  Check your Cursor settings under AI to ensure your model preference is set and you're authenticated properly.
+</Accordion>
+</AccordionGroup>
+
+<Tip>
+  Join the [Mintlify community](https://mintlify.com/community) to share tips and see how others are using Cursor for documentation.
+</Tip>

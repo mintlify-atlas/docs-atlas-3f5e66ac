@@ -1,20 +1,42 @@
 ---
 title: 'Code blocks'
-description: 'Display inline code and code blocks'
+description: 'Display code with syntax highlighting, line numbers, and advanced features'
 icon: 'code'
 ---
 
+Mintlify provides powerful code block features including syntax highlighting, line highlighting, file names, and multi-language code groups.
+
 ## Inline code
 
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
+Wrap text in backticks to format it as `inline code`:
 
+```md
+Wrap text in backticks to format it as `inline code`
 ```
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
+
+<Tip>
+Use inline code for file names, variable names, commands, and short code snippets within paragraphs.
+</Tip>
+
+## Basic code blocks
+
+Create code blocks by wrapping code in triple backticks with a language identifier:
+
+```javascript
+const greeting = "Hello, World!";
+console.log(greeting);
 ```
 
-## Code blocks
+````md
+```javascript
+const greeting = "Hello, World!";
+console.log(greeting);
+```
+````
 
-Use [fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) by enclosing code in three backticks and follow the leading ticks with the programming language of your snippet to get syntax highlighting. Optionally, you can also write the name of your code after the programming language.
+### With file names
+
+Add a file name after the language identifier:
 
 ```java HelloWorld.java
 class HelloWorld {
@@ -33,3 +55,260 @@ class HelloWorld {
 }
 ```
 ````
+
+## Code block features
+
+Mintlify supports advanced code block features through meta options:
+
+### Line highlighting
+
+Highlight specific lines to draw attention to important code:
+
+```python {2,4-6}
+def calculate_total(items):
+    total = 0  # Highlighted line
+    for item in items:
+        # These lines are highlighted
+        price = item.get('price', 0)
+        total += price
+    return total
+```
+
+````md
+```python {2,4-6}
+def calculate_total(items):
+    total = 0  # Highlighted line
+    for item in items:
+        # These lines are highlighted
+        price = item.get('price', 0)
+        total += price
+    return total
+```
+````
+
+### Line numbers
+
+Show line numbers for longer code blocks:
+
+```typescript showLineNumbers
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function getUser(id: number): User {
+  // Fetch user logic
+  return { id, name: "John", email: "john@example.com" };
+}
+```
+
+````md
+```typescript showLineNumbers
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+```
+````
+
+## Diff highlighting
+
+Show code changes with `+` and `-` prefixes:
+
+```diff
+function example() {
+-  const oldValue = "deprecated";
++  const newValue = "updated";
+   return newValue;
+}
+```
+
+````md
+```diff
+function example() {
+-  const oldValue = "deprecated";
++  const newValue = "updated";
+   return newValue;
+}
+```
+````
+
+<Note>
+Diff blocks are useful for showing before/after comparisons in migration guides and changelog documentation.
+</Note>
+
+## CodeGroup for multiple languages
+
+Use `<CodeGroup>` to display code examples in multiple languages with tabs:
+
+<CodeGroup>
+
+```javascript JavaScript
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+response = requests.get('https://api.example.com/data')
+data = response.json()
+print(data)
+```
+
+```bash cURL
+curl -X GET 'https://api.example.com/data' \
+  -H 'Content-Type: application/json'
+```
+
+```go Go
+resp, err := http.Get("https://api.example.com/data")
+if err != nil {
+    log.Fatal(err)
+}
+defer resp.Body.Close()
+```
+
+</CodeGroup>
+
+````mdx
+<CodeGroup>
+
+```javascript JavaScript
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+```
+
+```python Python
+import requests
+response = requests.get('https://api.example.com/data')
+data = response.json()
+```
+
+```bash cURL
+curl -X GET 'https://api.example.com/data'
+```
+
+</CodeGroup>
+````
+
+<Tip>
+CodeGroup is perfect for API documentation where users need examples in their preferred programming language.
+</Tip>
+
+## Advanced features
+
+### Title attribute
+
+Add a custom title to your code block:
+
+```json title="config.json"
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0"
+  }
+}
+```
+
+### Word wrap
+
+Enable word wrapping for long lines:
+
+```text wrap
+This is a very long line of text that would normally extend beyond the visible area, but with word wrapping enabled, it will automatically wrap to the next line for better readability.
+```
+
+### Collapsible code blocks
+
+Make code blocks expandable to save space:
+
+```javascript expandable
+// This code block can be collapsed
+function veryLongFunction() {
+  const step1 = performOperation();
+  const step2 = processData(step1);
+  const step3 = validateResult(step2);
+  const step4 = formatOutput(step3);
+  return step4;
+}
+```
+
+## Supported languages
+
+Mintlify supports syntax highlighting for 100+ languages including:
+
+<CardGroup cols={3}>
+  <Card title="JavaScript" icon="js">
+    `javascript`, `js`, `jsx`
+  </Card>
+  <Card title="TypeScript" icon="code">
+    `typescript`, `ts`, `tsx`
+  </Card>
+  <Card title="Python" icon="python">
+    `python`, `py`
+  </Card>
+  <Card title="Java" icon="java">
+    `java`
+  </Card>
+  <Card title="Go" icon="golang">
+    `go`, `golang`
+  </Card>
+  <Card title="Rust" icon="rust">
+    `rust`, `rs`
+  </Card>
+  <Card title="C/C++" icon="c">
+    `c`, `cpp`, `c++`
+  </Card>
+  <Card title="C#" icon="code">
+    `csharp`, `cs`
+  </Card>
+  <Card title="Ruby" icon="gem">
+    `ruby`, `rb`
+  </Card>
+  <Card title="PHP" icon="php">
+    `php`
+  </Card>
+  <Card title="Swift" icon="apple">
+    `swift`
+  </Card>
+  <Card title="Kotlin" icon="code">
+    `kotlin`, `kt`
+  </Card>
+</CardGroup>
+
+<Info>
+For shell commands, use `bash`, `sh`, or `shell`. For JSON, use `json`. For YAML, use `yaml` or `yml`.
+</Info>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Always specify language" icon="check">
+    Include the language identifier for proper syntax highlighting
+  </Card>
+  <Card title="Keep examples concise" icon="minimize">
+    Show only the relevant code, not entire files
+  </Card>
+  <Card title="Add context" icon="comment">
+    Include comments to explain complex code
+  </Card>
+  <Card title="Use CodeGroup" icon="layer-group">
+    Provide examples in multiple languages for APIs
+  </Card>
+</CardGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Images" icon="image" href="/essentials/images">
+    Learn how to add images and media to your docs
+  </Card>
+  <Card title="Reusable snippets" icon="recycle" href="/essentials/reusable-snippets">
+    Keep code examples in sync across pages
+  </Card>
+</CardGroup>

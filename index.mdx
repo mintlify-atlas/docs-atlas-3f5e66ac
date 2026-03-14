@@ -1,97 +1,197 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Welcome to Mintlify"
+description: "Build beautiful documentation that helps your users succeed"
 ---
 
-## Setting up
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.svg"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.svg"
+  alt="Hero Dark"
+/>
 
-Get your documentation site up and running in minutes.
+## What is Mintlify?
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+Mintlify is a modern documentation platform that transforms how you create and maintain documentation. Built with developers in mind, it combines the simplicity of Markdown with powerful features to create documentation your users will love.
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Fast setup"
+    icon="rocket"
   >
-    Edit your docs locally and preview them in real time.
+    Get your docs site running locally in under 5 minutes with our CLI.
   </Card>
   <Card
-    title="Customize your site"
+    title="Live preview"
+    icon="eye"
+  >
+    See changes instantly as you edit with hot reload and automatic updates.
+  </Card>
+  <Card
+    title="AI-powered writing"
+    icon="sparkles"
+  >
+    Integrate with Cursor, Claude Code, Windsurf, and other AI tools for assisted documentation.
+  </Card>
+  <Card
+    title="Beautiful by default"
+    icon="palette"
+  >
+    Professional design out of the box, customizable to match your brand.
+  </Card>
+</CardGroup>
+
+## Get started in minutes
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart guide"
+    icon="bolt"
+    href="/quickstart"
+  >
+    Follow three simple steps to set up your documentation site and deploy your first changes.
+  </Card>
+  <Card
+    title="Local development"
+    icon="laptop-code"
+    href="/development"
+  >
+    Install the Mintlify CLI and preview your docs locally with live reload.
+  </Card>
+</CardGroup>
+
+## Build powerful documentation
+
+Everything you need to create world-class documentation for your product.
+
+<AccordionGroup>
+  <Accordion title="Write with MDX" icon="pen-fancy">
+    Use Markdown with MDX components to create rich, interactive documentation. Add custom components, embed code samples, and style your content with minimal effort.
+
+    **Learn more:** [Markdown essentials](/essentials/markdown)
+  </Accordion>
+
+  <Accordion title="Code samples" icon="code">
+    Display syntax-highlighted code blocks with optional line numbers, file names, and multiple language support. Use CodeGroup for side-by-side comparisons.
+
+    ```bash
+    npm i -g mint
+    mint dev
+    ```
+
+    **Learn more:** [Code blocks](/essentials/code)
+  </Accordion>
+
+  <Accordion title="API documentation" icon="terminal">
+    Auto-generate beautiful API documentation from OpenAPI (Swagger) specifications. Keep your API docs in sync with your codebase effortlessly.
+
+    **Learn more:** [API reference](/api-reference/introduction)
+  </Accordion>
+
+  <Accordion title="Custom navigation" icon="map">
+    Organize your docs with tabs, groups, and nested pages. Create an intuitive structure that helps users find exactly what they need.
+
+    **Learn more:** [Navigation setup](/essentials/navigation)
+  </Accordion>
+</AccordionGroup>
+
+## Customize your site
+
+<CardGroup cols={2}>
+  <Card
+    title="Settings & branding"
     icon="palette"
     href="/essentials/settings"
   >
-    Customize the design and colors of your site to match your brand.
+    Customize colors, logos, favicons, and more to match your brand identity.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
+  <Card
+    title="Navigation structure"
+    icon="bars"
     href="/essentials/navigation"
   >
-    Organize your docs to help users find what they need and succeed with your product.
+    Configure tabs, groups, and page hierarchies in `docs.json`.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
+    title="Images & media"
     icon="image"
-    href="/essentials/images"
   >
-    Display images and other media.
+    Add images, videos, and other media to make your docs more engaging.
   </Card>
   <Card
     title="Reusable snippets"
     icon="recycle"
     href="/essentials/reusable-snippets"
   >
-    Write once and reuse across your docs.
+    Write once, reuse everywhere. Keep your docs DRY with content snippets.
   </Card>
-</Columns>
+</CardGroup>
+
+## AI-assisted documentation
+
+Integrate Mintlify with your favorite AI coding tools for intelligent documentation assistance.
+
+<Note>
+  Install the Mintlify skill to give your AI tools component reference, writing standards, and workflow guidance:
+  
+  ```bash
+  npx skills add https://mintlify.com/docs
+  ```
+</Note>
+
+<CardGroup cols={3}>
+  <Card
+    title="Cursor"
+    icon="arrow-pointer"
+    href="/ai-tools/cursor"
+  >
+    Configure Cursor for seamless documentation writing.
+  </Card>
+  <Card
+    title="Claude Code"
+    icon="message-bot"
+    href="/ai-tools/claude-code"
+  >
+    Set up Claude Code for AI-powered docs.
+  </Card>
+  <Card
+    title="Windsurf"
+    icon="wind"
+    href="/ai-tools/windsurf"
+  >
+    Integrate Windsurf with your docs workflow.
+  </Card>
+</CardGroup>
 
 ## Need inspiration?
 
 <Card
-  title="See complete examples"
+  title="Explore our showcase"
   icon="stars"
   href="https://mintlify.com/customers"
 >
-  Browse our showcase of exceptional documentation sites.
+  Browse documentation sites built with Mintlify. See real-world examples from leading companies and get inspired for your own docs.
 </Card>
+
+## Get help
+
+<CardGroup cols={2}>
+  <Card
+    title="Full documentation"
+    icon="book-open"
+    href="https://mintlify.com/docs"
+  >
+    Explore comprehensive guides and references.
+  </Card>
+  <Card
+    title="Community"
+    icon="users"
+    href="https://mintlify.com/community"
+  >
+    Join our community for support and discussions.
+  </Card>
+</CardGroup>

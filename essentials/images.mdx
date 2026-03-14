@@ -1,35 +1,114 @@
 ---
-title: 'Images and embeds'
-description: 'Add image, video, and other HTML elements'
+title: 'Images and media'
+description: 'Add images, videos, and other media to your documentation'
 icon: 'image'
 ---
 
 <img
   style={{ borderRadius: '0.5rem' }}
   src="https://mintlify-assets.b-cdn.net/bigbend.jpg"
+  alt="Beautiful landscape"
 />
 
-## Image
+Enhance your documentation with images, videos, and other media elements. Mintlify supports multiple ways to embed media with customization options.
 
-### Using Markdown
+## Images
 
-The [markdown syntax](https://www.markdownguide.org/basic-syntax/#images) lets you add images using the following code
+### Markdown syntax
+
+Use standard markdown syntax to add images:
 
 ```md
-![title](/path/image.jpg)
+![Image description](/images/screenshot.png)
 ```
 
-Note that the image file size must be less than 5MB. Otherwise, we recommend hosting on a service like [Cloudinary](https://cloudinary.com/) or [S3](https://aws.amazon.com/s3/). You can then use that URL and embed.
+<Note>
+Store images in the `/images` directory at the root of your docs project. The image file size must be less than 5MB.
+</Note>
 
-### Using embeds
+### HTML img tag
 
-To get more customizability with images, you can also use [embeds](/writing-content/embed) to add images
+For more control over image display, use HTML:
 
 ```html
-<img height="200" src="/path/image.jpg" />
+<img src="/images/screenshot.png" alt="Description" />
 ```
 
-## Embeds and HTML elements
+You can add styling attributes:
+
+```html
+<img 
+  src="/images/screenshot.png" 
+  alt="Description"
+  height="200"
+  style={{ borderRadius: '0.5rem' }}
+/>
+```
+
+### External images
+
+For images larger than 5MB, host them externally and reference the URL:
+
+```md
+![Large image](https://cdn.example.com/large-image.jpg)
+```
+
+<Tip>
+Consider using CDN services like [Cloudinary](https://cloudinary.com/) or [AWS S3](https://aws.amazon.com/s3/) for hosting large images.
+</Tip>
+
+## Frame component
+
+Use the `<Frame>` component to add borders, captions, and styling to images:
+
+<Frame>
+  <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" alt="Framed image" />
+</Frame>
+
+```mdx
+<Frame>
+  <img src="/images/screenshot.png" alt="Framed image" />
+</Frame>
+```
+
+### Frame with caption
+
+<Frame caption="This is a caption explaining the image above">
+  <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" alt="Image with caption" />
+</Frame>
+
+```mdx
+<Frame caption="This is a caption explaining the image above">
+  <img src="/images/screenshot.png" alt="Image with caption" />
+</Frame>
+```
+
+<Info>
+The Frame component automatically adds consistent styling and spacing around your images.
+</Info>
+
+## Image optimization tips
+
+<CardGroup cols={2}>
+  <Card title="Use appropriate formats" icon="file-image">
+    PNG for screenshots, JPG for photos, SVG for logos and icons
+  </Card>
+  <Card title="Compress images" icon="compress">
+    Use tools like TinyPNG or ImageOptim before uploading
+  </Card>
+  <Card title="Provide alt text" icon="universal-access">
+    Always include descriptive alt text for accessibility
+  </Card>
+  <Card title="Consider dark mode" icon="moon">
+    Test images in both light and dark themes
+  </Card>
+</CardGroup>
+
+## Videos
+
+### YouTube embeds
+
+Embed YouTube videos using an iframe:
 
 <iframe
   width="560"
@@ -42,18 +121,172 @@ To get more customizability with images, you can also use [embeds](/writing-cont
   style={{ width: '100%', borderRadius: '0.5rem' }}
 ></iframe>
 
-<br />
+```html
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/VIDEO_ID"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+  style={{ width: '100%', borderRadius: '0.5rem' }}
+></iframe>
+```
 
 <Tip>
-
-Mintlify supports [HTML tags in Markdown](https://www.markdownguide.org/basic-syntax/#html). This is helpful if you prefer HTML tags to Markdown syntax, and lets you create documentation with infinite flexibility.
-
+Replace `VIDEO_ID` with the actual YouTube video ID from the URL.
 </Tip>
 
-### iFrames
+### Vimeo embeds
 
-Loads another HTML page within the document. Most commonly used for embedding videos.
+Embed Vimeo videos similarly:
 
 ```html
-<iframe src="https://www.youtube.com/embed/4KzFe50RQkQ"> </iframe>
+<iframe
+  src="https://player.vimeo.com/video/VIDEO_ID"
+  width="640"
+  height="360"
+  frameBorder="0"
+  allow="autoplay; fullscreen; picture-in-picture"
+  allowFullScreen
+  style={{ width: '100%', borderRadius: '0.5rem' }}
+></iframe>
 ```
+
+### Loom embeds
+
+Embed Loom videos for tutorials and walkthroughs:
+
+```html
+<iframe
+  src="https://www.loom.com/embed/VIDEO_ID"
+  frameBorder="0"
+  allowFullScreen
+  style={{ width: '100%', height: '400px', borderRadius: '0.5rem' }}
+></iframe>
+```
+
+## HTML embeds
+
+<Tip>
+Mintlify supports [HTML in Markdown](https://www.markdownguide.org/basic-syntax/#html), giving you infinite flexibility for custom embeds and layouts.
+</Tip>
+
+### Interactive embeds
+
+Embed interactive content like CodeSandbox, Figma, or other tools:
+
+```html
+<iframe
+  src="https://codesandbox.io/embed/PROJECT_ID"
+  style={{ width: '100%', height: '500px', border: 0, borderRadius: '0.5rem' }}
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+```
+
+## Icons
+
+Use the `<Icon>` component to add inline icons:
+
+```mdx
+<Icon icon="rocket" /> Getting Started
+<Icon icon="code" /> API Reference
+<Icon icon="book" /> Guides
+```
+
+<Note>
+Mintlify uses [Font Awesome](https://fontawesome.com/icons) icons. Browse the icon library to find the perfect icon for your needs.
+</Note>
+
+## Image galleries
+
+Create image galleries using CardGroup with images:
+
+<CardGroup cols={3}>
+  <Card>
+    <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" alt="Gallery image 1" />
+  </Card>
+  <Card>
+    <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" alt="Gallery image 2" />
+  </Card>
+  <Card>
+    <img src="https://mintlify-assets.b-cdn.net/bigbend.jpg" alt="Gallery image 3" />
+  </Card>
+</CardGroup>
+
+```mdx
+<CardGroup cols={3}>
+  <Card>
+    <img src="/images/image1.png" alt="Gallery image 1" />
+  </Card>
+  <Card>
+    <img src="/images/image2.png" alt="Gallery image 2" />
+  </Card>
+  <Card>
+    <img src="/images/image3.png" alt="Gallery image 3" />
+  </Card>
+</CardGroup>
+```
+
+## Responsive images
+
+Make images responsive using CSS:
+
+```html
+<img 
+  src="/images/screenshot.png" 
+  alt="Responsive image"
+  style={{ width: '100%', maxWidth: '600px', height: 'auto' }}
+/>
+```
+
+## Dark mode images
+
+Provide different images for light and dark themes:
+
+```html
+<img 
+  src="/images/logo-light.png" 
+  alt="Logo"
+  className="block dark:hidden"
+/>
+<img 
+  src="/images/logo-dark.png" 
+  alt="Logo"
+  className="hidden dark:block"
+/>
+```
+
+<Warning>
+Always test your images in both light and dark modes to ensure good visibility and contrast.
+</Warning>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Optimize file sizes" icon="gauge-high">
+    Keep images under 5MB for local hosting
+  </Card>
+  <Card title="Use descriptive names" icon="file-signature">
+    Name files clearly: `dashboard-screenshot.png`
+  </Card>
+  <Card title="Add alt text" icon="universal-access">
+    Always provide meaningful alt text
+  </Card>
+  <Card title="Maintain aspect ratio" icon="expand">
+    Avoid distortion by preserving original proportions
+  </Card>
+</CardGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Reusable snippets" icon="recycle" href="/essentials/reusable-snippets">
+    Learn how to reuse content across pages
+  </Card>
+  <Card title="Markdown syntax" icon="text-size" href="/essentials/markdown">
+    Explore more markdown formatting options
+  </Card>
+</CardGroup>

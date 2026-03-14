@@ -31,3 +31,100 @@ All API endpoints are authenticated using Bearer tokens and picked up from the s
   }
 ]
 ```
+
+## Setting Up Authentication
+
+To authenticate your API requests, include your Bearer token in the Authorization header:
+
+```bash
+curl --request GET \
+  --url http://sandbox.mintlify.com/plants \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+```javascript
+const response = await fetch('http://sandbox.mintlify.com/plants', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+  }
+});
+```
+
+```python
+import requests
+
+headers = {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+}
+
+response = requests.get('http://sandbox.mintlify.com/plants', headers=headers)
+```
+
+## Base URL
+
+All API requests should be made to:
+
+```
+http://sandbox.mintlify.com
+```
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+  <Card
+    title="Get Plants"
+    icon="list"
+    href="/api-reference/endpoint/get"
+  >
+    Retrieve all plants from the store
+  </Card>
+  <Card
+    title="Create Plant"
+    icon="plus"
+    href="/api-reference/endpoint/create"
+  >
+    Add a new plant to the store
+  </Card>
+  <Card
+    title="Delete Plant"
+    icon="trash"
+    href="/api-reference/endpoint/delete"
+  >
+    Remove a plant from the store
+  </Card>
+  <Card
+    title="Webhook"
+    icon="webhook"
+    href="/api-reference/endpoint/webhook"
+  >
+    Receive notifications about new plants
+  </Card>
+</CardGroup>
+
+## API Playground
+
+Mintlify provides an interactive API playground for testing endpoints directly in the documentation. Each endpoint page includes:
+
+- **Try it out**: Test the endpoint with your own parameters
+- **Request builder**: Automatically generates code snippets in multiple languages
+- **Response viewer**: See real-time responses from the API
+- **Authentication**: Securely add your Bearer token to test authenticated requests
+
+## Response Format
+
+All responses are returned in JSON format. Successful responses will include the requested data, while errors will return an error object:
+
+```json
+{
+  "error": 400,
+  "message": "Error description"
+}
+```
+
+## Rate Limiting
+
+API rate limits are enforced to ensure fair usage. If you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
+
+## Support
+
+For questions or issues with the API, please contact our support team or refer to the individual endpoint documentation for detailed information.

@@ -1,80 +1,272 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get your documentation site up and running in under 5 minutes"
 ---
 
-## Get started in three steps
+Follow this three-step guide to set up your documentation site, preview it locally, and deploy your first changes.
 
-Get your documentation site running locally and make your first customization.
+## Prerequisites
 
-### Step 1: Set up your local environment
+Before you begin, make sure you have:
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+<CardGroup cols={2}>
+  <Card title="Node.js" icon="node-js">
+    Version 19 or higher installed on your machine
+  </Card>
+  <Card title="Git" icon="github">
+    Git installed for version control
+  </Card>
+</CardGroup>
 
-### Step 2: Deploy your changes
+<Steps>
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Step title="Clone your repository">
+  If you created a GitHub repository during onboarding, clone it to your local machine. You can find the link to your repository in your [Mintlify dashboard](https://dashboard.mintlify.com).
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+  ```bash
+  git clone https://github.com/your-username/your-docs-repo.git
+  cd your-docs-repo
+  ```
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+  <Tip>
+    If you're starting from scratch, you can use the [Mintlify Starter Kit](https://github.com/mintlify/starter) as a template by clicking the green **Use this template** button.
+  </Tip>
+</Step>
 
-### Step 3: Go live
+<Step title="Install the Mintlify CLI">
+  Install the Mintlify CLI globally using your preferred package manager:
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+  <CodeGroup>
+
+  ```bash npm
+  npm i -g mint
+  ```
+
+  ```bash yarn
+  yarn global add mint
+  ```
+
+  ```bash pnpm
+  pnpm add -g mint
+  ```
+
+  </CodeGroup>
+
+  Verify the installation:
+
+  ```bash
+  mint --version
+  ```
+
+  <Note>
+    Make sure you're running Node.js version 19 or higher. Check your version with `node --version`.
+  </Note>
+</Step>
+
+<Step title="Start the local preview server">
+  Navigate to your docs directory (where `docs.json` is located) and start the development server:
+
+  ```bash
+  mint dev
+  ```
+
+  Your documentation site will be available at `http://localhost:3000`.
+
+  <Tip>
+    **Live reload is enabled by default.** Any changes you make to your files will automatically refresh in the browser. No need to restart the server!
+  </Tip>
+
+  ### Custom ports
+
+  If port 3000 is already in use, you can specify a different port:
+
+  ```bash
+  mint dev --port 3333
+  ```
+
+  If you don't specify a port and 3000 is taken, Mintlify will automatically use the next available port:
+
+  ```
+  Port 3000 is already in use. Trying 3001 instead.
+  ```
+</Step>
+
+</Steps>
+
+## Make your first change
+
+Now that your site is running, let's customize it to make it your own.
+
+<Steps>
+
+<Step title="Update site name and colors">
+  Open `docs.json` in your editor and customize the basic settings:
+
+  ```json docs.json
+  {
+    "name": "Your Product Name",
+    "colors": {
+      "primary": "#16A34A",
+      "light": "#07C983",
+      "dark": "#15803D"
+    }
+  }
+  ```
+
+  Save the file and watch your changes appear instantly at `http://localhost:3000`.
+
+  <Tip>
+    Try changing the primary color to your brand color and see the immediate difference!
+  </Tip>
+</Step>
+
+<Step title="Edit a page">
+  Open `index.mdx` and make a simple change to the title or description:
+
+  ```mdx index.mdx
+  ---
+  title: "Welcome to [Your Product]"
+  description: "[Your custom description]"
+  ---
+  ```
+
+  The preview will update automatically as you save.
+</Step>
+
+<Step title="Validate your changes">
+  Before deploying, check for any broken links in your documentation:
+
+  ```bash
+  mint broken-links
+  ```
+
+  This command scans your docs and reports any broken internal or external links.
+</Step>
+
+</Steps>
+
+## Deploy your changes
+
+Once you're happy with your changes, deploy them to production.
+
+<Steps>
+
+<Step title="Install the GitHub app">
+  Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+
+  The GitHub app automatically deploys changes when you push to your repository's default branch.
+
+  <Note>
+    You only need to install the GitHub app once per organization.
+  </Note>
+</Step>
+
+<Step title="Commit and push your changes">
+  Stage, commit, and push your changes to GitHub:
+
+  ```bash
+  git add .
+  git commit -m "Update site name and colors"
+  git push origin main
+  ```
+
+  <Info>
+    Replace `main` with your default branch name if it's different (e.g., `master`).
+  </Info>
+</Step>
+
+<Step title="Verify deployment">
+  After pushing, your changes will be automatically deployed. Check your dashboard for deployment status.
+
+  If the deployment is successful, you'll see:
+
+  <Frame>
+    <img src="/images/checks-passed.png" alt="All checks have passed" style={{ borderRadius: '0.5rem' }} />
+  </Frame>
+
+  Your live site will update in moments!
+</Step>
+
+</Steps>
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
+Now that you have your documentation site running, explore these key features:
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card
+    title="Local development"
+    icon="laptop-code"
+    href="/development"
+  >
+    Learn advanced CLI commands, troubleshooting, and development workflows.
+  </Card>
+  <Card
+    title="Write content"
+    icon="pen-fancy"
+    href="/essentials/markdown"
+  >
+    Master MDX syntax and Mintlify components to create rich documentation.
+  </Card>
+  <Card
+    title="Customize settings"
+    icon="palette"
+    href="/essentials/settings"
+  >
+    Configure logos, favicons, navigation, and more in `docs.json`.
+  </Card>
+  <Card
+    title="API documentation"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Auto-generate API docs from OpenAPI specifications.
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Error: Command 'mint' not found">
+    The CLI wasn't installed correctly or isn't in your PATH.
+
+    **Solution:**
+    1. Reinstall the CLI: `npm i -g mint`
+    2. If using nvm, make sure you're on the correct Node version
+    3. Try restarting your terminal
+  </Accordion>
+
+  <Accordion title="Error: Could not find docs.json">
+    The CLI must be run from the directory containing your `docs.json` file.
+
+    **Solution:**
+    Navigate to your docs root directory:
+    ```bash
+    cd /path/to/your/docs
+    mint dev
+    ```
+  </Accordion>
+
+  <Accordion title="Changes not appearing in preview">
+    The browser cache might be stale, or there's a syntax error in your files.
+
+    **Solution:**
+    1. Hard refresh your browser (Ctrl+Shift+R or Cmd+Shift+R)
+    2. Check the terminal for any error messages
+    3. Verify your MDX syntax is valid
+  </Accordion>
+
+  <Accordion title="Preview looks different from production">
+    Your local CLI version might be out of sync with the production version.
+
+    **Solution:**
+    Update the CLI to the latest version:
+    ```bash
+    npm update -g mint
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Info>
+  **Need more help?** Check out the [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+</Info>

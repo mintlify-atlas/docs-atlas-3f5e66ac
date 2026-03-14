@@ -1,94 +1,403 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title: "Local development"
+description: "Preview and validate your documentation changes locally with the Mintlify CLI"
 ---
 
 <Info>
-  **Prerequisites**:
+  **Prerequisites:**
   - Node.js version 19 or higher
   - A docs repository with a `docs.json` file
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system.
+The Mintlify CLI provides powerful tools for local development, including live preview, link validation, and version management.
+
+## Installation
 
 <Steps>
-<Step title="Install the Mintlify CLI">
 
-```bash
-npm i -g mint
-```
+<Step title="Install the Mintlify CLI">
+  Install the CLI globally using your preferred package manager:
+
+  <CodeGroup>
+
+  ```bash npm
+  npm i -g mint
+  ```
+
+  ```bash yarn
+  yarn global add mint
+  ```
+
+  ```bash pnpm
+  pnpm add -g mint
+  ```
+
+  </CodeGroup>
+
+  Verify the installation:
+
+  ```bash
+  mint --version
+  ```
 </Step>
 
-<Step title="Preview locally">
+<Step title="Navigate to your docs directory">
+  Change to the directory containing your `docs.json` file:
 
-Navigate to your docs directory where your `docs.json` file is located, and run the following command:
+  ```bash
+  cd /path/to/your/docs
+  ```
+
+  <Note>
+    The CLI looks for `docs.json` in the current directory. Make sure you're in the correct location before running commands.
+  </Note>
+</Step>
+
+<Step title="Start the preview server">
+  Run the development server:
+
+  ```bash
+  mint dev
+  ```
+
+  Your documentation will be available at `http://localhost:3000`.
+
+  <Tip>
+    The preview automatically refreshes when you save changes to any file. No need to restart the server!
+  </Tip>
+</Step>
+
+</Steps>
+
+## CLI commands
+
+The Mintlify CLI provides several commands for managing your documentation:
+
+### `mint dev`
+
+Start the local development server with live reload.
 
 ```bash
 mint dev
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+**Options:**
 
-</Step>
-</Steps>
-
-## Custom ports
-
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. For example, to run Mintlify on port 3333, use this command:
+- `--port <number>` - Specify a custom port (default: 3000)
 
 ```bash
 mint dev --port 3333
 ```
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+<Info>
+  If the specified port is already in use, Mintlify will automatically try the next available port:
+  
+  ```
+  Port 3000 is already in use. Trying 3001 instead.
+  ```
+</Info>
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
+### `mint broken-links`
 
-## Mintlify versions
-
-Please note that each CLI release is associated with a specific version of Mintlify. If your local preview does not align with the production version, please update the CLI:
-
-```bash
-npm mint update
-```
-
-## Validating links
-
-The CLI can assist with validating links in your documentation. To identify any broken links, use the following command:
+Scan your documentation for broken internal and external links.
 
 ```bash
 mint broken-links
 ```
 
-## Deployment
+This command:
+- Checks all internal page links
+- Validates external URLs
+- Reports missing pages or anchors
+- Helps maintain documentation quality
 
-If the deployment is successful, you should see the following:
+<Tip>
+  Run this command before deploying to catch broken links early.
+</Tip>
 
-<Frame>
-  <img src="/images/checks-passed.png" alt="Screenshot of a deployment confirmation message that says All checks have passed." style={{ borderRadius: '0.5rem' }} />
-</Frame>
+### `mint update`
 
-## Code formatting
+Update the CLI to the latest version.
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+```bash
+npm update -g mint
+```
+
+<Note>
+  Each CLI release corresponds to a specific version of Mintlify. Keep your CLI updated to ensure your local preview matches production.
+</Note>
+
+## Custom port configuration
+
+By default, Mintlify uses port 3000 for local development. You can customize this in several ways:
+
+### Specify port via flag
+
+```bash
+mint dev --port 3333
+```
+
+### Automatic fallback
+
+If your specified port is unavailable, Mintlify automatically finds the next open port:
+
+```bash
+mint dev --port 3000
+```
+
+```
+Port 3000 is already in use. Trying 3001 instead.
+```
+
+## Version management
+
+Each CLI release is tied to a specific Mintlify version. If you notice differences between your local preview and production:
+
+1. Check your CLI version:
+   ```bash
+   mint --version
+   ```
+
+2. Update to the latest version:
+   ```bash
+   npm update -g mint
+   ```
+
+3. Restart your development server:
+   ```bash
+   mint dev
+   ```
+
+<Info>
+  Check the [CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions) to see what's new in each release.
+</Info>
+
+## Development workflow
+
+Here's a recommended workflow for local documentation development:
+
+<Steps>
+
+<Step title="Start the dev server">
+  ```bash
+  mint dev
+  ```
+  Open `http://localhost:3000` in your browser.
+</Step>
+
+<Step title="Edit your docs">
+  Make changes to your MDX files. The preview updates automatically as you save.
+</Step>
+
+<Step title="Validate links">
+  Before committing, check for broken links:
+  ```bash
+  mint broken-links
+  ```
+</Step>
+
+<Step title="Commit and push">
+  ```bash
+  git add .
+  git commit -m "Update documentation"
+  git push origin main
+  ```
+  
+  Your changes deploy automatically if you have the GitHub app installed.
+</Step>
+
+</Steps>
+
+## Editor setup
+
+Optimize your editor for MDX documentation:
+
+### VSCode extensions
+
+<CardGroup cols={2}>
+  <Card title="MDX" icon="code">
+    [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting and IntelliSense.
+  </Card>
+  <Card title="Prettier" icon="paintbrush">
+    [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for consistent code formatting.
+  </Card>
+</CardGroup>
+
+### AI tools integration
+
+Boost your documentation workflow with AI-assisted writing:
+
+```bash
+npx skills add https://mintlify.com/docs
+```
+
+This installs Mintlify's documentation skill for AI tools like:
+- [Cursor](/ai-tools/cursor)
+- [Claude Code](/ai-tools/claude-code)
+- [Windsurf](/ai-tools/windsurf)
+
+The skill provides component reference, writing standards, and workflow guidance.
 
 ## Troubleshooting
 
 <AccordionGroup>
+
   <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
+    This error typically occurs with an outdated Node.js version.
 
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of the CLI: `npm remove -g mint`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall the CLI: `npm i -g mint`
+    **Solution:**
+    1. Remove the CLI:
+       ```bash
+       npm remove -g mint
+       ```
+    2. Upgrade to Node.js v19 or higher:
+       ```bash
+       node --version
+       ```
+    3. Reinstall the CLI:
+       ```bash
+       npm i -g mint
+       ```
   </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the `~/.mintlify` folder. Then run `mint dev` again.
+  <Accordion title="Error: Unknown error encountered">
+    Generic errors may be caused by corrupted cache files.
+
+    **Solution:**
+    1. Delete the Mintlify cache folder:
+       ```bash
+       rm -rf ~/.mintlify
+       ```
+    2. Restart the dev server:
+       ```bash
+       mint dev
+       ```
   </Accordion>
+
+  <Accordion title="Preview doesn't match production">
+    Version mismatch between your local CLI and production.
+
+    **Solution:**
+    Update the CLI to the latest version:
+    ```bash
+    npm update -g mint
+    ```
+    
+    Then restart your dev server.
+  </Accordion>
+
+  <Accordion title="Port 3000 already in use">
+    Another application is using port 3000.
+
+    **Solution:**
+    Either:
+    1. Let Mintlify auto-select the next available port
+    2. Specify a different port:
+       ```bash
+       mint dev --port 3333
+       ```
+  </Accordion>
+
+  <Accordion title="Changes not appearing in browser">
+    Browser cache or build issues may prevent updates from showing.
+
+    **Solution:**
+    1. Hard refresh your browser:
+       - **Windows/Linux:** Ctrl + Shift + R
+       - **Mac:** Cmd + Shift + R
+    2. Check the terminal for build errors
+    3. Restart the dev server if needed
+  </Accordion>
+
+  <Accordion title="Error: docs.json not found">
+    The CLI must be run from the directory containing `docs.json`.
+
+    **Solution:**
+    Navigate to your docs root:
+    ```bash
+    cd /path/to/your/docs
+    mint dev
+    ```
+  </Accordion>
+
 </AccordionGroup>
 
-Curious about what changed in the latest CLI version? Check out the [CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions).
+## Deployment
+
+When you push changes to your repository, the Mintlify GitHub app automatically deploys them to production.
+
+### Successful deployment
+
+If deployment succeeds, you'll see this confirmation:
+
+<Frame>
+  <img src="/images/checks-passed.png" alt="All checks have passed" style={{ borderRadius: '0.5rem' }} />
+</Frame>
+
+### Deployment requirements
+
+<Steps>
+
+<Step title="Install the GitHub app">
+  Install from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+</Step>
+
+<Step title="Push to default branch">
+  Changes are deployed automatically when pushed to your default branch (usually `main` or `master`).
+</Step>
+
+</Steps>
+
+<Note>
+  The GitHub app only deploys changes from your repository's default branch. Pushes to other branches won't trigger deployments.
+</Note>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Run link validation" icon="link">
+    Always run `mint broken-links` before committing to catch issues early.
+  </Card>
+  <Card title="Keep CLI updated" icon="arrow-up">
+    Regularly update the CLI with `npm update -g mint` to stay in sync with production.
+  </Card>
+  <Card title="Use live preview" icon="eye">
+    Take advantage of hot reload to iterate quickly on your documentation.
+  </Card>
+  <Card title="Install editor extensions" icon="puzzle-piece">
+    Use MDX and Prettier extensions for better syntax highlighting and formatting.
+  </Card>
+</CardGroup>
+
+## Additional resources
+
+<CardGroup cols={2}>
+  <Card
+    title="CLI changelog"
+    icon="clock-rotate-left"
+    href="https://www.npmjs.com/package/mintlify?activeTab=versions"
+  >
+    See what's new in each CLI release.
+  </Card>
+  <Card
+    title="Full documentation"
+    icon="book-open"
+    href="https://mintlify.com/docs"
+  >
+    Explore comprehensive Mintlify guides.
+  </Card>
+  <Card
+    title="Community support"
+    icon="users"
+    href="https://mintlify.com/community"
+  >
+    Get help from the Mintlify community.
+  </Card>
+  <Card
+    title="GitHub issues"
+    icon="github"
+    href="https://github.com/mintlify/mint/issues"
+  >
+    Report bugs or request features.
+  </Card>
+</CardGroup>
