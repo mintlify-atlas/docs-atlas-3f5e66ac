@@ -1,0 +1,91 @@
+{
+  "projectType": "general",
+  "projectName": "Mintlify Starter Kit",
+  "projectDescription": "A comprehensive starter template for building beautiful documentation sites with Mintlify",
+  "theme": "mint",
+  "primaryColor": "#54545c",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "index",
+              "quickstart",
+              "development"
+            ]
+          },
+          {
+            "group": "Customization",
+            "pages": [
+              "essentials/settings",
+              "essentials/navigation"
+            ]
+          },
+          {
+            "group": "Writing content",
+            "pages": [
+              "essentials/markdown",
+              "essentials/code",
+              "essentials/images",
+              "essentials/reusable-snippets"
+            ]
+          },
+          {
+            "group": "AI tools",
+            "pages": [
+              "ai-tools/cursor",
+              "ai-tools/claude-code",
+              "ai-tools/windsurf"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Endpoint examples",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "AI-assisted documentation writing with skills integration",
+    "Live preview with Mintlify CLI",
+    "Comprehensive MDX component examples",
+    "OpenAPI-based API documentation",
+    "Customizable themes and branding",
+    "Multiple AI tool integrations (Cursor, Claude Code, Windsurf)"
+  ],
+  "publicApiSurface": [
+    "Getting started guide",
+    "Quickstart tutorial",
+    "Development workflow",
+    "Settings configuration",
+    "Navigation structure",
+    "Markdown syntax",
+    "Code blocks",
+    "Images and media",
+    "Reusable snippets",
+    "AI tools setup",
+    "API endpoint examples (GET, POST, DELETE, Webhook)"
+  ]
+}
